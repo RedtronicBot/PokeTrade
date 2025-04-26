@@ -1,6 +1,6 @@
-import trash from "../assets/trash-solid.svg"
-import modify from "../assets/pen-solid.svg"
-import { deleteExtension } from "../function/Admin/deleteExtension"
+import trash from "../../assets/trash-solid.svg"
+import modify from "../../assets/pen-solid.svg"
+import { deleteExtension } from "../../function/Admin/deleteExtension"
 import PropTypes from "prop-types"
 function ShowExtension({
 	extension,

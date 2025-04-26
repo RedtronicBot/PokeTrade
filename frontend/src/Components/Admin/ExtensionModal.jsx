@@ -1,10 +1,10 @@
 import { useRef, useState } from "react"
 import PropTypes from "prop-types"
-import { uploadCarteImage } from "../function/Admin/uploadCarteImage"
-import { uploadCarte } from "../function/Admin/UploadCarte"
-import { modifyCarte } from "../function/Admin/modifyCarte"
+import { uploadCarteImage } from "../../function/Admin/uploadCarteImage"
+import { uploadCarte } from "../../function/Admin/UploadCarte"
+import { modifyCarte } from "../../function/Admin/modifyCarte"
 /*Components*/
-import DropDownRarete from "../Components/Admin/DropDownRarete"
+import DropDownRarete from "../../Components/Admin/DropDownRarete"
 function ExtensionModal({
 	extension,
 	modifyExtension,

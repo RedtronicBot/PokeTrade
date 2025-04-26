@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react"
-import { modifyFieldExtension } from "../function/Admin/modifyFieldExtension"
-import { uploadModification } from "../function/Admin/uploadModification"
+import { modifyFieldExtension } from "../../function/Admin/modifyFieldExtension"
+import { uploadModification } from "../../function/Admin/uploadModification"
 import PropTypes from "prop-types"
 function ModifyExtensionModal({
 	extension,

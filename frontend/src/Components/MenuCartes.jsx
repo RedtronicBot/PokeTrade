@@ -1,10 +1,11 @@
 import { useState } from "react"
 import PropTypes from "prop-types"
 import cross from "../assets/x-solid.svg"
-import axios from "axios"
 import trade_logo from "../assets/arrow-right-arrow-left-solid.svg"
 /*fonctions*/
-import { onModifyCarte } from "../function/onModifyCarte"
+import { onModifyCarte } from "../function/MenuCartes/onModifyCarte"
+import { uploadExtension } from "../function/MenuCartes/uploadExtension"
+import { onReset } from "../function/MenuCartes/onReset"
 function MenuCartes({ cartes, indexCarte, nomExtension, setUser, user }) {
 	const [open, setOpen] = useState(false)
 	const [obtenu, setObtenu] = useState(false)
@@ -16,30 +17,6 @@ function MenuCartes({ cartes, indexCarte, nomExtension, setUser, user }) {
 		setTrade(carteData.trade)
 	}
 
-	function uploadExtension() {
-		axios
-			.put(`${import.meta.env.VITE_API_URL}/user/${user.nom}`, {
-				carte: user.carte,
-			})
-			.then(() => {
-				axios
-					.get(`${import.meta.env.VITE_API_URL}/user/${user.nom}`)
-					.then((res) => setUser(res.data))
-					.catch((err) => console.error(err))
-			})
-			.catch((err) => console.error(err))
-		setOpen(!open)
-	}
-
-	function onReset() {
-		axios
-			.get(`${import.meta.env.VITE_API_URL}/user/${user.nom}`)
-			.then((res) => {
-				setUser(res.data)
-				setOpen(!open)
-			})
-			.catch((err) => console.error(err))
-	}
 	return (
 		<div className="flex flex-col gap-[10px] items-center relative">
 			<div className="flex w-full justify-around">
@@ -49,12 +26,10 @@ function MenuCartes({ cartes, indexCarte, nomExtension, setUser, user }) {
 				</p>
 			</div>
 
-			{user.carte !== undefined && (
+			{user.carte !== undefined ? (
 				<div
 					className={`bg-black ${
-						user.carte.find((ext) => ext.nom === nomExtension).carte[indexCarte].obtenu
-							? "opacity-100"
-							: "opacity-50"
+						user.carte.find((ext) => ext.nom === nomExtension).carte[indexCarte].obtenu ? "opacity-100" : "opacity-50"
 					} rounded-lg relative`}
 				>
 					<img
@@ -68,9 +43,7 @@ function MenuCartes({ cartes, indexCarte, nomExtension, setUser, user }) {
 					/>
 					<div
 						className={`absolute top-[-5px] left-[-5px] ${
-							user.carte.find((ext) => ext.nom === nomExtension).carte[indexCarte].trade
-								? "flex"
-								: "hidden"
+							user.carte.find((ext) => ext.nom === nomExtension).carte[indexCarte].trade ? "flex" : "hidden"
 						} bg-green-600 p-[5px] rounded-md`}
 					>
 						<img
@@ -83,6 +56,13 @@ function MenuCartes({ cartes, indexCarte, nomExtension, setUser, user }) {
 						/>
 					</div>
 				</div>
+			) : (
+				<div
+					className="bg-black opacity-50
+				 rounded-lg relative"
+				>
+					<img src={cartes.image} alt="" className="rounded-lg h-[240px]" />
+				</div>
 			)}
 			<div
 				className={`${
@@ -94,7 +74,7 @@ function MenuCartes({ cartes, indexCarte, nomExtension, setUser, user }) {
 						src={cross}
 						alt=""
 						className="h-[20px] cursor-pointer"
-						onClick={() => onReset()}
+						onClick={() => onReset(user, setUser, setOpen)}
 						style={{
 							filter: "invert(100%) sepia(100%) saturate(1%) hue-rotate(313deg) brightness(110%) contrast(101%)",
 						}}
@@ -130,7 +110,7 @@ function MenuCartes({ cartes, indexCarte, nomExtension, setUser, user }) {
 				</div>
 
 				<div className="bg-tertiary rounded-md px-[15px] py-[10px] cursor-pointer w-fit">
-					<p className="text-xl text-white" onClick={() => uploadExtension()}>
+					<p className="text-xl text-white" onClick={() => uploadExtension(user, setOpen, setUser)}>
 						Modifier
 					</p>
 				</div>

@@ -28,15 +28,20 @@ function Route() {
 			setName(cookieNom)
 		}
 	}, [])
+	function Logout() {
+		document.cookie = "nom=; max-age=0; path=/"
+		setName("")
+		setLogin(false)
+	}
 	return (
 		<div>
 			{route === "Accueil" && (
 				<Accueil
 					setRoute={setRoute}
 					login={login}
-					setLogin={setLogin}
 					setRouteExtension={setRouteExtension}
 					name={name}
+					logout={Logout}
 				/>
 			)}
 			{route === "Admin" && <Admin setRoute={setRoute} />}

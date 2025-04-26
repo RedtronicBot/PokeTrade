@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from "react"
 import PropTypes from "prop-types"
-function DropDownRarete({ cartes, rarete, modifyCarte, indexCarte, modifyExtension }) {
+function DropDownRarete({ cartes, rarete, modifyCarte, indexCarte, modifyExtension, setExtension }) {
 	const [open, setOpen] = useState(false)
 	const dropdownRef = useRef(null)
 
 	function onModifyCarte(raretes) {
 		setOpen(!open)
-		modifyCarte("rarete", raretes, indexCarte, modifyExtension)
+		modifyCarte("rarete", raretes, indexCarte, modifyExtension, setExtension)
 	}
 
 	useEffect(() => {
@@ -46,5 +46,6 @@ DropDownRarete.propTypes = {
 	modifyCarte: PropTypes.func.isRequired,
 	indexCarte: PropTypes.number.isRequired,
 	modifyExtension: PropTypes.string.isRequired,
+	setExtension: PropTypes.func.isRequired,
 }
 export default DropDownRarete

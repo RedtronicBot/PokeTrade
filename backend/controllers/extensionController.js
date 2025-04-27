@@ -9,22 +9,18 @@ exports.getAllExtension = (req, res, next) => {
 exports.postExtension = async (req, res, next) => {
 	try {
 		const newExtension = await Extension.create(req.body)
+		const extensions = await Extension.find()
+		const extensionIndex = extensions.length - 1
 		const extensionToAdd = {
 			nom: newExtension.nom,
+			index: extensionIndex,
 			carte: newExtension.carte.map((c) => ({
 				numero: c.numero,
 				obtenu: false,
 				trade: false,
 			})),
 		}
-		const users = await User.find()
-		await Promise.all(
-			users.map(async (user) => {
-				user.carte.push(extensionToAdd)
-				user.markModified("carte")
-				await user.save()
-			})
-		)
+		await User.updateMany({}, { $push: { carte: extensionToAdd } })
 		res.status(201).json({ message: "Extension créée et ajoutée à tous les utilisateurs" })
 	} catch (error) {
 		res.status(400).json({ error })
@@ -40,10 +36,7 @@ exports.postCarte = (req, res, next) => {
 }
 
 exports.postImageExtension = (req, res, next) => {
-	Extension.findOneAndUpdate(
-		{ nom: req.body.nom },
-		{ image: `${process.env.VITE_API_URL}/extensions/${req.file.filename}` }
-	)
+	Extension.findOneAndUpdate({ nom: req.body.nom }, { image: `extensions/${req.file.filename}` })
 		.then(() => res.status(200).json({ message: "Image Ajouté" }))
 		.catch((error) => {
 			res.status(400).json({ error })
@@ -56,7 +49,7 @@ exports.postImageCarte = (req, res, next) => {
 
 exports.deleteExtension = async (req, res, next) => {
 	try {
-		const deletedExtension = await Extension.findOneAndDelete({ nom: req.body.nom })
+		const deletedExtension = await Extension.findOneAndDelete({ _id: req.body.id })
 		if (!deletedExtension) {
 			return res.status(404).json({ message: "Extension non trouvée" })
 		}
@@ -105,16 +98,12 @@ exports.modifyOneExtension = async (req, res, next) => {
 						trade: false,
 					})),
 				}
-				if (!extUser) {
-					userCarte.push(extensionStructure)
-				} else {
-					const carteLengthDiff = updatedExtension.carte.length - extUser.carte.length
-					if (carteLengthDiff > 0) {
-						const missingItems = extensionStructure.carte.slice(-carteLengthDiff)
-						extUser.carte.push(...missingItems)
-					} else if (carteLengthDiff < 0) {
-						extUser.carte.splice(updatedExtension.carte.length)
-					}
+				const carteLengthDiff = updatedExtension.carte.length - extUser.carte.length
+				if (carteLengthDiff > 0) {
+					const missingItems = extensionStructure.carte.slice(-carteLengthDiff)
+					extUser.carte.push(...missingItems)
+				} else if (carteLengthDiff < 0) {
+					extUser.carte.splice(updatedExtension.carte.length)
 				}
 
 				if (JSON.stringify(user.carte) !== JSON.stringify(userCarte)) {

@@ -20,7 +20,6 @@ function DropDownRarete({ cartes, rarete, modifyCarte, indexCarte, modifyExtensi
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [])
-
   return (
     <div
       ref={dropdownRef}
@@ -28,7 +27,7 @@ function DropDownRarete({ cartes, rarete, modifyCarte, indexCarte, modifyExtensi
       onClick={() => setOpen(!open)}
     >
       <img
-        src={`${import.meta.env.VITE_API_URL}/${rarete.find((e) => e.nom === cartes.rarete).url}`}
+        src={`${import.meta.env.VITE_API_URL}/${rarete.find((e) => e._id === cartes.rarete).url}`}
         alt=""
         className="min-h-[10px] min-w-[10px]"
       />

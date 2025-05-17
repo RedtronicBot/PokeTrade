@@ -1,9 +1,9 @@
 import axios from "axios"
-export function uploadCarte(nomExtension, imageCarteRef, extension, setOpenModifyExtention, openModifyExtention) {
+export function uploadCarte(idExtension, imageCarteRef, extension, setOpenModifyExtention, openModifyExtention) {
   axios
     .put(`${import.meta.env.VITE_API_URL}/extension`, {
-      nom: nomExtension,
-      carte: extension.find((ext) => ext.nom === nomExtension).carte,
+      nom: extension.find((ext) => ext._id === idExtension).nom,
+      carte: extension.find((ext) => ext._id === idExtension).carte,
     })
     .then(() => {
       axios

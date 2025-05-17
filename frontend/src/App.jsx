@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react"
+import { Routes, Route } from "react-router"
 import Accueil from "./Pages/Accueil"
 import Admin from "./Pages/Admin"
 import Extension from "./Pages/Extension"
 import Trade from "./Pages/Trade"
-function Route() {
-  const [route, setRoute] = useState("Accueil")
+function App() {
   const [login, setLogin] = useState(false)
-  const [routeExtension, setRouteExtension] = useState("")
   const [name, setName] = useState("")
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -34,27 +33,13 @@ function Route() {
     setLogin(false)
   }
   return (
-    <div>
-      {route === "Accueil" && (
-        <Accueil
-          setRoute={setRoute}
-          login={login}
-          setRouteExtension={setRouteExtension}
-          name={name}
-          logout={Logout}
-        />
-      )}
-      {route === "Admin" && <Admin setRoute={setRoute} />}
-      {route === "Extension" && (
-        <Extension
-          setRoute={setRoute}
-          routeExtension={routeExtension}
-          name={name}
-        />
-      )}
-      {route === "Trade" && <Trade />}
-    </div>
+    <Routes>
+      <Route path="/" element={<Accueil login={login} name={name} logout={Logout} />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/extension/:id" element={<Extension name={name} />} />
+      <Route path="/trade" element={<Trade name={name} />} />
+    </Routes>
   )
 }
 
-export default Route
+export default App

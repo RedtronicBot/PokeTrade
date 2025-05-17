@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react"
+import { Link } from "react-router"
 import pokeliste from "../assets/logo.png"
 import axios from "axios"
 import PropTypes from "prop-types"
-function Accueil({ setRoute, login, setRouteExtension, name, logout }) {
+function Accueil({ login, name, logout }) {
   const [menu, setMenu] = useState(false)
   const [extension, setExtension] = useState([])
   const [user, setUser] = useState({})
@@ -26,17 +27,13 @@ function Accueil({ setRoute, login, setRouteExtension, name, logout }) {
         .catch((err) => console.error(err))
     }
   }, [name])
-  function onSetRouteExtension(extension) {
-    setRoute("Extension")
-    setRouteExtension(extension)
-  }
   return (
     <div className="flex h-full min-h-screen flex-col items-center gap-[10px] bg-primary font-sans">
       <div className="mb-[25px] flex h-[100px] w-full items-center justify-between bg-menu px-[15px] py-[20px]">
         <img src={pokeliste} alt="" className="h-full w-auto object-contain" />
-        <p className="text-xl text-white" onClick={() => setRoute("Trade")}>
-          Échange
-        </p>
+        <Link to="/trade">
+          <p className="text-xl text-white">Échange</p>
+        </Link>
         {login ? (
           <div
             className="flex cursor-pointer select-none items-center justify-center gap-[10px] rounded-xl bg-secondary px-[15px] py-[10px] text-3xl text-white"
@@ -58,7 +55,9 @@ function Accueil({ setRoute, login, setRouteExtension, name, logout }) {
             className={`absolute right-[15px] top-[85px] flex flex-col items-center justify-center gap-[10px] rounded-xl bg-secondary px-[10px] py-[10px] text-white w-[${loginWidth}px]`}
           >
             <div className="flex w-full select-none justify-center rounded-md bg-tertiary px-[15px] py-[10px]">
-              <div onClick={() => setRoute("Admin")}>Admin</div>
+              <Link to="/admin">
+                <div>Admin</div>
+              </Link>
             </div>
             <div
               className="flex w-full select-none justify-center rounded-md bg-tertiary px-[15px] py-[10px]"
@@ -75,31 +74,24 @@ function Accueil({ setRoute, login, setRouteExtension, name, logout }) {
           extension
             .sort((a, b) => new Date(a.date) - new Date(b.date))
             .map((extensions, index) => (
-              <div
-                key={index}
-                className="flex w-[300px] cursor-pointer flex-col items-center justify-center rounded-md bg-tertiary py-[10px] text-white"
-                onClick={() => onSetRouteExtension(extensions.nom)}
-              >
-                <p className="text-lg">{extensions.nom}</p>
-                <div className="flex items-center justify-center gap-[10px] pt-[5px]">
-                  {extensions.logo !== "" && (
+              <Link to={`/extension/${extensions._id}`} key={index}>
+                <div className="flex h-[160px] w-[300px] cursor-pointer flex-col items-center justify-center rounded-md bg-tertiary py-[10px] text-white">
+                  <p className="text-lg">{extensions.nom}</p>
+                  <div className="flex items-center justify-center gap-[10px] pt-[5px]">
                     <img
-                      src={`${import.meta.env.VITE_API_URL}/${extensions.logo}`}
-                      className="max-h-[64px] max-w-[64px]"
+                      src={`${import.meta.env.VITE_API_URL}/${extensions.image}`}
+                      className="max-h-[130px] max-w-[200px]"
                     />
-                  )}
-                  <img src={extensions.image} className="max-h-[130px] max-w-[200px]" />
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
       </div>
     </div>
   )
 }
 Accueil.propTypes = {
-  setRoute: PropTypes.func.isRequired,
   login: PropTypes.bool.isRequired,
-  setRouteExtension: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   logout: PropTypes.func.isRequired,
 }

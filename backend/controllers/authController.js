@@ -30,8 +30,8 @@ exports.redirect = async (req, res, next) => {
 		let user = await User.findOne({ id: userDataResponse.data.id })
 		if (!user) {
 			const extensions = await Extension.find()
-			const cartes = extensions.map((ext) => ({
-				nom: ext.nom,
+			const cartes = extensions.map((ext, indexExt) => ({
+				idExtension: ext._id,
 				carte: ext.carte.map((c) => ({ numero: c.numero, obtenu: false, trade: false })),
 			}))
 
@@ -39,7 +39,7 @@ exports.redirect = async (req, res, next) => {
 				nom: username,
 				avatar_url,
 				id,
-				carte: cartes,
+				extension: cartes,
 				admin: false,
 			})
 			await user.save()

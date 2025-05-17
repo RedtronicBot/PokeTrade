@@ -1,25 +1,25 @@
 services:
-    backend:
-        image: poketrade-backend
-        container_name: node-backend
-        build: ./backend
-        ports:
-            - "3001:3001"
-        env_file:
-            - ./backend/.env
-        restart: unless-stopped
-        volumes:
-            - ./data/raretes:/app/raretes
-            - ./data/cartes:/app/cartes
-            - .data/extensions:/app/extensions
+  backend:
+    image: poketrade-backend
+    container_name: node-backend
+    build: ./backend
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+    volumes:
+      - ./data/raretes:/app/raretes
+      - ./data/cartes:/app/cartes
+      - ./data/extensions:/app/extensions
 
-    frontend:
-        image: nginx:alpine
-        container_name: vite-frontend
-        ports:
-            - "8080:80"
-        volumes:
-            - ./frontend/dist:/usr/share/nginx/html:ro
-        depends_on:
-            - backend
-        restart: unless-stopped
+  frontend:
+    image: nginx:alpine
+    container_name: vite-frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html:ro
+    depends_on:
+      - backend
+    restart: unless-stopped

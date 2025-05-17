@@ -1,23 +1,25 @@
-export function onModifyCarte(field, value, nomExtension, indexCarte, setUser, setState) {
+export function onModifyCarte(field, value, idExtension, indexCarte, setUser, setState) {
   setUser((prevUser) => {
-    const updatedCarte = prevUser.carte.map((ext) => {
-      if (ext.nom === nomExtension) {
-        const newSubCarte = [...ext.carte]
-        newSubCarte[indexCarte] = {
-          ...newSubCarte[indexCarte],
+    const updatedCarte = prevUser.extension.map((ext) => {
+      if (ext.idExtension === idExtension) {
+        const newCartes = [...ext.carte]
+        newCartes[indexCarte] = {
+          ...newCartes[indexCarte],
           [field]: !value,
         }
         return {
           ...ext,
-          carte: newSubCarte,
+          carte: newCartes,
         }
       }
       return ext
     })
+
     return {
       ...prevUser,
-      carte: updatedCarte,
+      extension: updatedCarte,
     }
   })
-  setState(!value)
+
+  setState((prev) => !prev)
 }

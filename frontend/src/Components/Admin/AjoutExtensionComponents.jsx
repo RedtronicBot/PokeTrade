@@ -9,6 +9,7 @@ function AjoutExtensionComponents({ nomExtensionRef, rarete, setExtension, setRa
   const imageRareteRef = useRef(null)
   const rareteRef = useRef(null)
   const idRareteRef = useRef(null)
+  const tradableExtensionRef = useRef(null)
   return (
     <div className="mt-[25px] flex justify-center gap-[50px] text-white">
       <div className="flex flex-col items-center gap-[10px] rounded-md bg-secondary px-[15px] py-[10px]">
@@ -33,6 +34,10 @@ function AjoutExtensionComponents({ nomExtensionRef, rarete, setExtension, setRa
         />
         <p>Image</p>
         <input type="file" ref={imageExtensionRef} />
+        <div className="flex items-center justify-center gap-[10px]">
+          <label>Tradable</label>
+          <input type="checkbox" ref={tradableExtensionRef} />
+        </div>
         <div
           onClick={() =>
             AjoutExtension(
@@ -41,6 +46,7 @@ function AjoutExtensionComponents({ nomExtensionRef, rarete, setExtension, setRa
               nomExtensionRef,
               nbCarteExtensionRef,
               imageExtensionRef,
+              tradableExtensionRef,
               setExtension,
             )
           }
@@ -72,7 +78,6 @@ function AjoutExtensionComponents({ nomExtensionRef, rarete, setExtension, setRa
 }
 AjoutExtensionComponents.propTypes = {
   nomExtensionRef: PropTypes.object.isRequired,
-  AjoutExtension: PropTypes.func.isRequired,
   rarete: PropTypes.array.isRequired,
   setExtension: PropTypes.func.isRequired,
   setRarete: PropTypes.func.isRequired,

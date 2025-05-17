@@ -8,8 +8,8 @@ function CarteTable({ carteFirstTable, carteSecondTable }) {
             <tr className="bg-secondary">
               <th className="border-2 border-tertiary px-4 py-2 text-white">Numéro</th>
               <th className="border-2 border-tertiary px-4 py-2 text-white">Nom</th>
-              <th className="border-2 border-tertiary px-4 py-2 text-white">Obtenu</th>
-              <th className="border-b-2 border-l-2 border-t-2 border-tertiary px-4 py-2 text-white">Trade</th>
+              <th className="border-2 border-tertiary px-4 py-2 text-white">Trade</th>
+              <th className="border-b-2 border-l-2 border-t-2 border-tertiary px-4 py-2 text-white">Rareté</th>
             </tr>
           </thead>
           <tbody>
@@ -17,9 +17,12 @@ function CarteTable({ carteFirstTable, carteSecondTable }) {
               <tr key={index} className="text-center">
                 <td className="border-2 border-tertiary px-4 py-2 text-white">{carte.numero}</td>
                 <td className="border-2 border-tertiary px-4 py-2 text-white">{carte.nom}</td>
-                <td className="border-2 border-tertiary px-4 py-2 text-white">{carte.obtenu ? "Oui" : "Non"}</td>
+                <td className="border-2 border-tertiary px-4 py-2 text-white">{carte.trade ? "Oui" : "Non"}</td>
                 <td className="border-b-2 border-l-2 border-r-2 border-t-2 border-tertiary px-4 py-2 text-white last:border-r-0">
-                  {carte.trade ? "Oui" : "Non"}
+                  <div className="flex w-full justify-center">
+                    <p className="hidden">{carte.rarete.id}</p>
+                    <img src={`${import.meta.env.VITE_API_URL}/${carte.rarete.url}`} className="h-[40px]" />
+                  </div>
                 </td>
               </tr>
             ))}
@@ -32,8 +35,8 @@ function CarteTable({ carteFirstTable, carteSecondTable }) {
             <tr className="bg-secondary">
               <th className="border-2 border-tertiary px-4 py-2 text-white">Numéro</th>
               <th className="border-2 border-tertiary px-4 py-2 text-white">Nom</th>
-              <th className="border-2 border-tertiary px-4 py-2 text-white">Obtenu</th>
               <th className="border-2 border-tertiary px-4 py-2 text-white">Trade</th>
+              <th className="border-2 border-tertiary px-4 py-2 text-white">Rareté</th>
             </tr>
           </thead>
           <tbody>
@@ -41,8 +44,13 @@ function CarteTable({ carteFirstTable, carteSecondTable }) {
               <tr key={index} className="text-center">
                 <td className="border-2 border-tertiary px-4 py-2 text-white">{carte.numero}</td>
                 <td className="border-2 border-tertiary px-4 py-2 text-white">{carte.nom}</td>
-                <td className="border-2 border-tertiary px-4 py-2 text-white">{carte.obtenu ? "Oui" : "Non"}</td>
                 <td className="border-2 border-tertiary px-4 py-2 text-white">{carte.trade ? "Oui" : "Non"}</td>
+                <td className="border-2 border-tertiary px-4 py-2 text-white">
+                  <div className="flex w-full justify-center">
+                    <p className="hidden">{carte.rarete.id}</p>
+                    <img src={`${import.meta.env.VITE_API_URL}/${carte.rarete.url}`} className="h-[40px]" />
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>

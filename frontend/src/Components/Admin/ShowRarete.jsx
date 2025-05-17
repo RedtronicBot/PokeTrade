@@ -8,7 +8,7 @@ function ShowRarete({ rarete, setRarete, setOpenModifyRarete, openModifyRarete, 
     setRareteInModification(idRarete)
   }
   return (
-    <div className="flex min-h-[100px] w-auto flex-wrap items-center gap-[10px] rounded-xl bg-secondary px-[10px] py-[15px]">
+    <div className="flex min-h-[100px] w-[90%] flex-wrap items-center justify-center gap-[10px] rounded-xl bg-secondary px-[10px] py-[15px]">
       {rarete.map((raretes) => (
         <div
           key={raretes._id}
@@ -36,6 +36,7 @@ function ShowRarete({ rarete, setRarete, setOpenModifyRarete, openModifyRarete, 
           <div className="flex items-center justify-center gap-[10px] pt-[5px]">
             <img src={`${import.meta.env.VITE_API_URL}/${raretes.url}`} className="max-h-[32px]" alt="" />
           </div>
+          <p className="text-lg text-white">id:{raretes.id}</p>
         </div>
       ))}
     </div>

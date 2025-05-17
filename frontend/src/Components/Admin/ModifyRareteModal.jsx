@@ -37,7 +37,7 @@ function ModifyRareteModal({ rarete, rareteInModification, setRarete }) {
           <input type="file" ref={imageRareteModifyRef} />
           <div
             className="cursor-pointer rounded-md bg-tertiary px-[15px] py-[10px] text-white"
-            onClick={() => uploadModificationRarete(foundRarete._id)}
+            onClick={() => uploadModificationRarete(nomRareteModifyRef, idRareteModifyRef, foundRarete._id, setRarete)}
           >
             <p>Modifier</p>
           </div>

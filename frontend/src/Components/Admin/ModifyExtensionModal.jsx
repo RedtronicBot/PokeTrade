@@ -15,6 +15,7 @@ function ModifyExtensionModal({
   const nbCarteTotalExtensionModifyRef = useRef(null)
   const nbCarteExtensionModifyRef = useRef(null)
   const imageExtensionModifyRef = useRef(null)
+  const tradableExtensionModifyRef = useRef(null)
   /*Remplissage de la modale de modification d'une extension*/
   const foundExtension = extension.find((ext) => ext._id === extensionInModification)
 
@@ -23,6 +24,7 @@ function ModifyExtensionModal({
       nomExtensionModifyRef.current.value = foundExtension.nom
       nbCarteExtensionModifyRef.current.value = foundExtension.nbCarte
       nbCarteTotalExtensionModifyRef.current.value = foundExtension.nbCarteTotal
+      tradableExtensionModifyRef.current.checked = foundExtension.tradable
     }
   }, [foundExtension])
   return (
@@ -52,6 +54,10 @@ function ModifyExtensionModal({
           />
           <img src={`${import.meta.env.VITE_API_URL}/${foundExtension.image}`} className="max-h-[300px]" alt="" />
           <input type="file" ref={imageExtensionModifyRef} />
+          <div className="flex items-center justify-center gap-[10px]">
+            <label>Tradable</label>
+            <input type="checkbox" ref={tradableExtensionModifyRef} />
+          </div>
           <div
             className="cursor-pointer rounded-md bg-tertiary px-[15px] py-[10px] text-white"
             onClick={() =>
@@ -59,11 +65,11 @@ function ModifyExtensionModal({
                 foundExtension._id,
                 extension,
                 rarete,
-                extensionInModification,
                 nbCarteTotalExtensionModifyRef,
                 nomExtensionModifyRef,
                 nbCarteExtensionModifyRef,
                 imageExtensionModifyRef,
+                tradableExtensionModifyRef,
                 nomExtensionRef,
                 setExtension,
                 setOpenModifyOneExtension,

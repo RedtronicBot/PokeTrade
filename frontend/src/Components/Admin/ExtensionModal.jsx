@@ -50,6 +50,7 @@ function ExtensionModal({
                             modifyExtension,
                             imageCarteRef,
                             setPreviewImage,
+                            extension,
                             setExtension,
                           )
                         }

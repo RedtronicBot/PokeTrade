@@ -3,7 +3,7 @@ const router = express.Router()
 const userController = require("../controllers/userController")
 
 router.get("/", userController.getUser)
-router.get("/:nom", userController.getOneUser)
-router.put("/:nom", userController.modifyCarteUser)
+router.get("/:name", userController.getOneUser)
+router.put("/:name", userController.modifyCarteUser)
 
 module.exports = router

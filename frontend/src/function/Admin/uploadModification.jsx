@@ -3,17 +3,17 @@ export function uploadModification(
   id,
   extension,
   rarete,
-  extensionInModification,
   nbCarteTotalExtensionModifyRef,
   nomExtensionModifyRef,
   nbCarteExtensionModifyRef,
   imageExtensionModifyRef,
+  tradableExtensionModifyRef,
   nomExtensionRef,
   setExtension,
   setOpenModifyOneExtension,
   openModifyOneExtension,
 ) {
-  const array_card = extension.find((ext) => ext.nom === extensionInModification).carte
+  const array_card = extension.find((ext) => ext._id === id).carte
   const last_index = array_card[array_card.length - 1].numero
   var carte = []
   carte = [...array_card]
@@ -25,10 +25,8 @@ export function uploadModification(
       carteObj = {
         nom: "",
         image: "",
-        obtenu: false,
-        trade: false,
         numero: i + 1,
-        rarete: rarete[0].nom,
+        rarete: rarete[0]._id,
         mission_premium: false,
       }
       carte.push(carteObj)
@@ -41,6 +39,7 @@ export function uploadModification(
       nom: nomExtensionModifyRef.current.value,
       nbCarteTotal: nbCarteTotalExtensionModifyRef.current.value,
       nbCarte: nbCarteExtensionModifyRef.current.value,
+      tradable: tradableExtensionModifyRef.current.checked,
       carte: carte,
     })
     .then(() => {

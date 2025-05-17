@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
+import { Link } from "react-router"
 import retour from "../assets/back_logo.png"
 import axios from "axios"
-import PropTypes from "prop-types"
 /*Components*/
 import AjoutExtensionComponents from "../Components/Admin/AjoutExtensionComponents"
 import ExtensionModal from "../Components/Admin/ExtensionModal"
@@ -15,7 +15,7 @@ import ModifyRareteModal from "../Components/Admin/ModifyRareteModal"
 import { useScrollPosition } from "../hooks/useScrollPosition"
 import { useClickOutside } from "../hooks/useClickOutside"
 import { useModalBehavior } from "../hooks/useModalBehavior"
-function Admin({ setRoute }) {
+function Admin() {
   const [extension, setExtension] = useState([])
   const [modifyExtension, setModifyExtension] = useState("")
   const [openModifyExtention, setOpenModifyExtention] = useState(false)
@@ -56,9 +56,11 @@ function Admin({ setRoute }) {
   return (
     <div className="flex h-full min-h-screen flex-col items-center gap-[10px] bg-primary font-sans">
       <div className="mt-[20px] flex w-full items-center justify-between px-[15px]">
-        <img src={retour} alt="" onClick={() => setRoute("Accueil")} />
+        <Link to="/">
+          <img src={retour} alt="" />
+        </Link>
         <h1 className="text-3xl text-white">Mode Admin</h1>
-        <p className="select-none text-transparent">u</p>
+        <p className="select-none"></p>
       </div>
       <AjoutExtensionComponents
         nomExtensionRef={nomExtensionRef}
@@ -126,8 +128,5 @@ function Admin({ setRoute }) {
       </div>
     </div>
   )
-}
-Admin.propTypes = {
-  setRoute: PropTypes.func.isRequired,
 }
 export default Admin

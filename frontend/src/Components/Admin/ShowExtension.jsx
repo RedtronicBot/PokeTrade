@@ -1,6 +1,6 @@
-import trash from "../../assets/trash-solid.svg"
-import modify from "../../assets/pen-solid.svg"
+import { Pencil, Trash2 } from "lucide-react"
 import { deleteExtension } from "../../function/Admin/deleteExtension"
+
 import PropTypes from "prop-types"
 function ShowExtension({
   extension,
@@ -25,24 +25,17 @@ function ShowExtension({
       {extension.length > 0 &&
         extension.map((extensions, index) => (
           <div key={index} className="relative flex w-fit">
-            <img
-              src={trash}
-              alt=""
-              className="absolute left-[5px] top-[5px] h-[20px] cursor-pointer"
-              style={{
-                filter: "invert(100%) sepia(100%) saturate(1%) hue-rotate(313deg) brightness(110%) contrast(101%)",
-              }}
+            <Trash2
+              size={20}
+              className="absolute left-[5px] top-[5px] cursor-pointer text-white"
               onClick={() => deleteExtension(extensions._id, setExtension)}
             />
-            <img
-              src={modify}
-              alt=""
-              className="absolute right-[5px] top-[5px] h-[20px] cursor-pointer"
-              style={{
-                filter: "invert(100%) sepia(100%) saturate(1%) hue-rotate(313deg) brightness(110%) contrast(101%)",
-              }}
+            <Pencil
+              size={20}
+              className="absolute right-[5px] top-[5px] cursor-pointer"
               onClick={() => onModifyOneExtension(extensions._id)}
             />
+
             <div
               className="flex w-[300px] flex-col items-center justify-center rounded-md bg-tertiary py-[10px] text-white"
               onClick={() => onModifyExtension(extensions._id)}

@@ -1,5 +1,4 @@
-import trash from "../../assets/trash-solid.svg"
-import modify from "../../assets/pen-solid.svg"
+import { Pencil, Trash2 } from "lucide-react"
 import PropTypes from "prop-types"
 import { deleteRarete } from "../../function/Admin/deleteRarete"
 function ShowRarete({ rarete, setRarete, setOpenModifyRarete, openModifyRarete, setRareteInModification }) {
@@ -14,22 +13,14 @@ function ShowRarete({ rarete, setRarete, setOpenModifyRarete, openModifyRarete, 
           key={raretes._id}
           className="relative flex min-h-[80px] flex-col justify-center gap-[10px] rounded-md bg-tertiary px-[10px] py-[25px]"
         >
-          <img
-            src={trash}
-            alt=""
-            className="absolute left-[5px] top-[5px] h-[20px] cursor-pointer"
-            style={{
-              filter: "invert(100%) sepia(100%) saturate(1%) hue-rotate(313deg) brightness(110%) contrast(101%)",
-            }}
+          <Trash2
+            size={20}
+            className="absolute left-[5px] top-[5px] cursor-pointer"
             onClick={() => deleteRarete(raretes._id, setRarete)}
           />
-          <img
-            src={modify}
-            alt=""
-            className="absolute right-[5px] top-[5px] h-[20px] cursor-pointer"
-            style={{
-              filter: "invert(100%) sepia(100%) saturate(1%) hue-rotate(313deg) brightness(110%) contrast(101%)",
-            }}
+          <Pencil
+            size={20}
+            className="absolute right-[5px] top-[5px] cursor-pointer"
             onClick={() => onModifyOneRarete(raretes._id)}
           />
           <p className="text-lg text-white">{raretes.nom}</p>

@@ -110,7 +110,11 @@ exports.getUser = (req, res, next) => {
 				},
 			},
 		},
-
+		{
+			$sort: {
+				"_id.nom": 1, // on trie par nom d'utilisateur à la toute fin
+			},
+		},
 		// 3. Projection finale
 		{
 			$project: {

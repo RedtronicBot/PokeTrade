@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router"
-import retour from "../assets/back_logo.png"
+import { ArrowLeft } from "lucide-react"
 import axios from "axios"
 /*Components*/
 import AjoutExtensionComponents from "../Components/Admin/AjoutExtensionComponents"
@@ -57,7 +57,7 @@ function Admin() {
     <div className="flex h-full min-h-screen flex-col items-center gap-[10px] bg-primary font-sans">
       <div className="mt-[20px] flex w-full items-center justify-between px-[15px]">
         <Link to="/">
-          <img src={retour} alt="" />
+          <ArrowLeft />
         </Link>
         <h1 className="text-3xl text-white">Mode Admin</h1>
         <p className="select-none"></p>

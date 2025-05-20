@@ -32,6 +32,7 @@ exports.postExtension = async (req, res, next) => {
 				numero: c.numero,
 				obtenu: false,
 				trade: false,
+				liked: false,
 			})),
 		}
 		await User.updateMany({}, { $push: { extension: extensionToAdd } })

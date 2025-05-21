@@ -4,6 +4,7 @@ import Accueil from "./Pages/Accueil"
 import Admin from "./Pages/Admin"
 import Extension from "./Pages/Extension"
 import Trade from "./Pages/Trade"
+import NavBarOutlet from "./Components/NavBar/NavBarOutlet"
 function App() {
   const [login, setLogin] = useState(false)
   const [name, setName] = useState("")
@@ -34,10 +35,12 @@ function App() {
   }
   return (
     <Routes>
-      <Route path="/" element={<Accueil login={login} name={name} logout={Logout} />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/extension/:id" element={<Extension name={name} />} />
-      <Route path="/trade" element={<Trade name={name} />} />
+      <Route element={<NavBarOutlet />}>
+        <Route index element={<Accueil login={login} name={name} logout={Logout} />} />
+        <Route path="/extension/:id" element={<Extension name={name} />} />
+        <Route path="/trade" element={<Trade name={name} />} />
+      </Route>
     </Routes>
   )
 }

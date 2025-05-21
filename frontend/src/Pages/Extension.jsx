@@ -35,20 +35,39 @@ function Extension({ name }) {
       </div>
       {
         <div className="flex flex-wrap justify-center gap-[15px] px-[20px] py-[15px]">
-          {Object.keys(user).length > 0 &&
-            extension.length > 0 &&
-            extension
-              .filter((ext) => ext._id === id)[0]
-              .carte.map((cartes, index) => (
-                <MenuCartes
-                  cartes={cartes}
-                  key={index}
-                  indexCarte={index}
-                  extension={extension.find((ext) => ext._id === id)}
-                  setUser={setUser}
-                  user={user}
-                />
-              ))}
+          {name
+            ? Object.keys(user).length > 0 &&
+              extension.length > 0 &&
+              extension
+                .filter((ext) => ext._id === id)[0]
+                .carte.map((cartes, index) => (
+                  <MenuCartes
+                    cartes={cartes}
+                    key={index}
+                    indexCarte={index}
+                    extension={extension.find((ext) => ext._id === id)}
+                    setUser={setUser}
+                    user={user}
+                  />
+                ))
+            : extension.length > 0 &&
+              extension
+                .filter((ext) => ext._id === id)[0]
+                .carte.map((cartes, index) => (
+                  <div className="flex flex-col items-center gap-[10px]" key={index}>
+                    <div className="flex w-full gap-[10px]">
+                      <p className="text-xl text-white">{cartes.numero}</p>
+                      <p className="h-[28px] max-w-[130px] overflow-hidden text-ellipsis whitespace-nowrap text-xl text-white">
+                        {cartes.nom}
+                      </p>
+                    </div>
+                    <img
+                      src={`${import.meta.env.VITE_API_URL}/${cartes.image}`}
+                      alt=""
+                      className="h-[240px] rounded-lg grayscale"
+                    />
+                  </div>
+                ))}
         </div>
       }
     </div>

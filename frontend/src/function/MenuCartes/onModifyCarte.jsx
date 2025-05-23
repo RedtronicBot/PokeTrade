@@ -1,5 +1,5 @@
 import axios from "axios"
-export function onModifyCarte(field, value, idExtension, indexCarte, setUser, setState, user) {
+export function onModifyCarte(field, value, idExtension, indexCarte, setUser, user) {
   const updatedUser = { ...user } // copie de l'user
   updatedUser.extension = updatedUser.extension.map((ext) => {
     // on parcours les extension pour voir qui on modifie
@@ -28,7 +28,6 @@ export function onModifyCarte(field, value, idExtension, indexCarte, setUser, se
     }
     return ext
   })
-
   setUser(updatedUser)
 
   axios
@@ -36,6 +35,4 @@ export function onModifyCarte(field, value, idExtension, indexCarte, setUser, se
       extension: updatedUser.extension,
     })
     .catch((err) => console.error(err))
-
-  setState((prev) => !prev)
 }

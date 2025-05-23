@@ -1,18 +1,18 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 /*fonctions*/
 import { onModifyCarte } from "../function/MenuCartes/onModifyCarte"
 import { ArrowRightLeft, Check, Heart, X } from "lucide-react"
 function MenuCartes({ cartes, indexCarte, setUser, user, extension }) {
-  const [obtenu, setObtenu] = useState(
-    user.extension.find((ext) => ext.idExtension === extension._id).carte[indexCarte].obtenu,
-  )
-  const [trade, setTrade] = useState(
-    user.extension.find((ext) => ext.idExtension === extension._id).carte[indexCarte].trade,
-  )
-  const [liked, setLiked] = useState(
-    user.extension.find((ext) => ext.idExtension === extension._id).carte[indexCarte].liked,
-  )
+  const [obtenu, setObtenu] = useState(false)
+  const [trade, setTrade] = useState(false)
+  const [liked, setLiked] = useState(false)
+  useEffect(() => {
+    const ext = user.extension.find((ext) => ext.idExtension === extension._id)
+    setObtenu(ext.carte[indexCarte].obtenu)
+    setTrade(ext.carte[indexCarte].trade)
+    setLiked(ext.carte[indexCarte].liked)
+  }, [user, extension._id, indexCarte])
   return (
     <div className="relative flex flex-col items-center gap-[10px]">
       <div className="flex w-full gap-[10px]">
@@ -40,7 +40,7 @@ function MenuCartes({ cartes, indexCarte, setUser, user, extension }) {
             liked ? "bg-green-100" : "bg-red-100"
           } cursor-pointer select-none rounded-full p-[5px]`}
           onClick={() => {
-            onModifyCarte("liked", liked, extension._id, indexCarte, setUser, setLiked, user)
+            onModifyCarte("liked", liked, extension._id, indexCarte, setUser, user)
           }}
         >
           <Heart
@@ -52,7 +52,7 @@ function MenuCartes({ cartes, indexCarte, setUser, user, extension }) {
           className={`flex items-center justify-center text-xl text-white ${
             obtenu ? "bg-green-100" : "bg-red-100"
           } cursor-pointer select-none rounded-full p-[5px]`}
-          onClick={() => onModifyCarte("obtenu", obtenu, extension._id, indexCarte, setUser, setObtenu, user)}
+          onClick={() => onModifyCarte("obtenu", obtenu, extension._id, indexCarte, setUser, user)}
         >
           {obtenu ? <Check className="text-green-500" /> : <X className="text-red-500" />}
         </div>
@@ -63,7 +63,7 @@ function MenuCartes({ cartes, indexCarte, setUser, user, extension }) {
               trade ? "bg-green-100" : "bg-red-100"
             } cursor-pointer select-none rounded-full p-[5px]`}
             onClick={() => {
-              onModifyCarte("trade", trade, extension._id, indexCarte, setUser, setTrade, user)
+              onModifyCarte("trade", trade, extension._id, indexCarte, setUser, user)
             }}
           >
             <ArrowRightLeft className={`${trade ? "text-green-500" : "text-red-500"}`} />

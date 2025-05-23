@@ -36,7 +36,7 @@ function App() {
   return (
     <Routes>
       <Route path="/admin" element={<Admin />} />
-      <Route element={<NavBarOutlet />}>
+      <Route element={<NavBarOutlet login={login} name={name} logout={Logout} />}>
         <Route index element={<Accueil login={login} name={name} logout={Logout} />} />
         <Route path="/extension/:id" element={<Extension name={name} />} />
         <Route path="/trade" element={<Trade name={name} />} />

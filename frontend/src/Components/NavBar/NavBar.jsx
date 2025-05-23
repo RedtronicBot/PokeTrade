@@ -24,11 +24,26 @@ const NavBar = ({ login, name, logout }) => {
       )}
       {login ? (
         <div
-          className="flex cursor-pointer select-none items-center justify-center gap-[10px] rounded-xl bg-secondary px-[15px] py-[10px] text-3xl text-white"
+          className="relative flex cursor-pointer select-none items-center justify-center gap-[10px] rounded-xl bg-secondary px-[15px] py-[10px] text-3xl text-white"
           onClick={() => (user.admin ? setMenu(!menu) : logout())}
         >
           <p>{user.nom}</p>
           <img src={user.avatar_url} className="h-[40px] rounded-full object-cover" />
+          {menu && (
+            <div className="absolute top-[65px] flex w-full flex-col items-center justify-center gap-[10px] rounded-xl bg-secondary px-[10px] py-[10px] text-white">
+              <div className="flex w-full select-none justify-center rounded-md bg-tertiary px-[15px] py-[10px]">
+                <Link to="/admin">
+                  <p className="text-lg">Admin</p>
+                </Link>
+              </div>
+              <div
+                className="flex w-full select-none justify-center rounded-md bg-tertiary px-[15px] py-[10px]"
+                onClick={() => logout()}
+              >
+                <p className="text-lg">Logout</p>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <Link to={`${import.meta.env.VITE_API_URL}/auth`}>
@@ -36,23 +51,6 @@ const NavBar = ({ login, name, logout }) => {
             <p>Login</p>
           </div>
         </Link>
-      )}
-      {login && menu && (
-        <div
-          className={`absolute right-[15px] top-[85px] flex flex-col items-center justify-center gap-[10px] rounded-xl bg-secondary px-[10px] py-[10px] text-white`}
-        >
-          <div className="flex w-full select-none justify-center rounded-md bg-tertiary px-[15px] py-[10px]">
-            <Link to="/admin">
-              <div>Admin</div>
-            </Link>
-          </div>
-          <div
-            className="flex w-full select-none justify-center rounded-md bg-tertiary px-[15px] py-[10px]"
-            onClick={() => logout()}
-          >
-            <p>Logout</p>
-          </div>
-        </div>
       )}
     </div>
   )

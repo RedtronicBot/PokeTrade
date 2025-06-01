@@ -15,12 +15,12 @@ function ShowRarete({ rarete, setRarete, setOpenModifyRarete, openModifyRarete, 
         >
           <Trash2
             size={20}
-            className="absolute left-[5px] top-[5px] cursor-pointer"
+            className="absolute left-[5px] top-[5px] cursor-pointer text-white"
             onClick={() => deleteRarete(raretes._id, setRarete)}
           />
           <Pencil
             size={20}
-            className="absolute right-[5px] top-[5px] cursor-pointer"
+            className="absolute right-[5px] top-[5px] cursor-pointer text-white"
             onClick={() => onModifyOneRarete(raretes._id)}
           />
           <p className="text-lg text-white">{raretes.nom}</p>

@@ -57,7 +57,7 @@ function Admin() {
     <div className="flex h-full min-h-screen flex-col items-center gap-[10px] bg-primary font-sans">
       <div className="mt-[20px] flex w-full items-center justify-between px-[15px]">
         <Link to="/">
-          <ArrowLeft />
+          <ArrowLeft size={36} className="text-white" />
         </Link>
         <h1 className="text-3xl text-white">Mode Admin</h1>
         <p className="select-none"></p>

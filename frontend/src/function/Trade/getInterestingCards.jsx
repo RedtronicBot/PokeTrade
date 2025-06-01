@@ -25,9 +25,7 @@ export function getInterestingTradeCards(myUser, otherUser) {
 
     other: otherUser.extensions.map((ext) => {
       const myExt = myUser.extensions.find((e) => e.idExtension === ext.idExtension)
-      console.log(myExt)
       const myCardNums = new Set(myExt?.carte.filter((c) => c.obtenu).map((c) => c.numero) || [])
-      console.log(myCardNums)
       const filteredCarte = ext.carte.filter(
         (card) => card.trade && card.obtenu && !myCardNums.has(card.numero) && myRareteIds.has(card.rarete.id),
       )

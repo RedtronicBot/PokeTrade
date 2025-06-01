@@ -58,7 +58,7 @@ function Trade({ name }) {
     <div className="flex h-screen flex-col items-center bg-primary font-sans">
       <div className="my-[20px] flex w-[95%] items-center justify-between">
         <Link to="/">
-          <ArrowLeft />
+          <ArrowLeft size={36} className="text-white" />
         </Link>
         {<h1 className="text-bold text-center text-2xl text-white">Tableau d&apos;échange</h1>}
         <p className="select-none"></p>

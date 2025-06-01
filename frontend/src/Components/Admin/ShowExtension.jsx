@@ -32,7 +32,7 @@ function ShowExtension({
             />
             <Pencil
               size={20}
-              className="absolute right-[5px] top-[5px] cursor-pointer"
+              className="absolute right-[5px] top-[5px] cursor-pointer text-white"
               onClick={() => onModifyOneExtension(extensions._id)}
             />
 

@@ -8,11 +8,10 @@ function MenuCartes({ cartes, indexCarte, setUser, user, extension }) {
   const [trade, setTrade] = useState(false)
   const [liked, setLiked] = useState(false)
   useEffect(() => {
-    const ext = user.extension.find((ext) => ext.idExtension === extension._id)
-    setObtenu(ext.carte[indexCarte].obtenu)
-    setTrade(ext.carte[indexCarte].trade)
-    setLiked(ext.carte[indexCarte].liked)
-  }, [user, extension._id, indexCarte])
+    setObtenu(cartes.obtenu)
+    setTrade(cartes.trade)
+    setLiked(cartes.liked)
+  }, [cartes])
   return (
     <div className="relative flex flex-col items-center gap-[10px]">
       <div className="flex w-full gap-[10px]">
@@ -22,15 +21,14 @@ function MenuCartes({ cartes, indexCarte, setUser, user, extension }) {
         </p>
       </div>
 
-      <div
-        className={`bg-black ${
-          user.extension.find((ext) => ext.idExtension === extension._id).carte[indexCarte].obtenu
-            ? "grayscale-0"
-            : "grayscale"
-        } relative rounded-lg`}
-      >
+      <div className={`bg-black ${cartes.obtenu ? "grayscale-0" : "grayscale"} relative rounded-lg`}>
         {cartes.image && (
-          <img src={`${import.meta.env.VITE_API_URL}/${cartes.image}`} alt="" className="h-[240px] rounded-lg" />
+          <img
+            src={`${import.meta.env.VITE_API_URL}/${cartes.image}`}
+            alt=""
+            className="h-[240px] rounded-lg"
+            onClick={() => onModifyCarte("obtenu", obtenu, extension._id, indexCarte, setUser, user)}
+          />
         )}
       </div>
 
@@ -57,7 +55,7 @@ function MenuCartes({ cartes, indexCarte, setUser, user, extension }) {
           {obtenu ? <Check className="text-green-500" /> : <X className="text-red-500" />}
         </div>
 
-        {extension.tradable && (
+        {extension.nom !== "Promo-A" && (
           <div
             className={`flex items-center justify-center text-xl text-white ${
               trade ? "bg-green-100" : "bg-red-100"

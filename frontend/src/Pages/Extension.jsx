@@ -33,7 +33,7 @@ function Extension({ name }) {
   }
   const carte = useMemo(() => {
     if (Object.keys(user).length > 0 && extension.length > 0) {
-      const extensions = extension.find((ext) => (ext._id = id))
+      const extensions = extension.find((ext) => ext._id === id)
       const userExtension = user.extension.find((ext) => ext.idExtension === id)
       if (!extensions || !userExtension) return []
       return extensions.carte.map((carte, index) => ({
@@ -43,7 +43,8 @@ function Extension({ name }) {
         liked: userExtension.carte[index].liked,
       }))
     }
-  }, [extension, user])
+    return []
+  }, [extension, user, id])
 
   const toggleLiked = () => {
     setLiked((prev) => (prev === null ? true : prev === true ? false : null))
@@ -108,7 +109,6 @@ function Extension({ name }) {
         <div className="flex flex-wrap justify-center gap-[15px] px-[20px] py-[15px]">
           {name
             ? Object.keys(user).length > 0 &&
-              carte &&
               carte.length > 0 &&
               carte
                 .filter((c) => (obtenu !== null ? c.obtenu === obtenu : true))

@@ -111,6 +111,7 @@ function Extension({ name }) {
             ? Object.keys(user).length > 0 &&
               carte.length > 0 &&
               carte
+                .map((c, originalIndex) => ({ ...c, originalIndex }))
                 .filter((c) => (obtenu !== null ? c.obtenu === obtenu : true))
                 .filter((c) => (liked !== null ? c.liked === liked : true))
                 .filter((c) => (trade !== null ? c.trade === trade : true))
@@ -118,7 +119,7 @@ function Extension({ name }) {
                   <MenuCartes
                     cartes={cartes}
                     key={index}
-                    indexCarte={index}
+                    indexCarte={cartes.originalIndex}
                     extension={extension.find((ext) => ext._id === id)}
                     setUser={setUser}
                     user={user}

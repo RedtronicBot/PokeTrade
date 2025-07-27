@@ -12,6 +12,10 @@ function Extension({ name }) {
   const [obtenu, setObtenu] = useState(null)
   const [trade, setTrade] = useState(null)
   const [liked, setLiked] = useState(null)
+  function formatPercent(value) {
+    const percent = value * 100
+    return Number.isInteger(percent) ? percent.toString() : percent.toFixed(2)
+  }
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_API_URL}/extension`)
@@ -31,19 +35,41 @@ function Extension({ name }) {
     setTrade(null)
     setObtenu(null)
   }
-  const carte = useMemo(() => {
+  const { carte, extensions, nbObtenues, percent } = useMemo(() => {
     if (Object.keys(user).length > 0 && extension.length > 0) {
       const extensions = extension.find((ext) => ext._id === id)
+      console.log("🚀 ~ Extension ~ extensions:", extensions)
       const userExtension = user.extension.find((ext) => ext.idExtension === id)
-      if (!extensions || !userExtension) return []
-      return extensions.carte.map((carte, index) => ({
+
+      if (!extensions || !userExtension) {
+        return {
+          carte: [],
+          extensions: undefined,
+          nbObtenues: 0,
+          percent: "0%",
+        }
+      }
+
+      const cartes = userExtension.carte.slice(0, extensions.nbCarte) || []
+      const nbObtenues = cartes.filter((c) => c.obtenu === true).length
+      const percent = formatPercent(nbObtenues / extensions.nbCarte)
+
+      const carte = extensions.carte.map((carte, index) => ({
         ...carte,
-        obtenu: userExtension.carte[index].obtenu,
-        trade: userExtension.carte[index].trade,
-        liked: userExtension.carte[index].liked,
+        obtenu: userExtension.carte[index]?.obtenu ?? false,
+        trade: userExtension.carte[index]?.trade ?? false,
+        liked: userExtension.carte[index]?.liked ?? false,
       }))
+
+      return { carte, extensions, nbObtenues, percent }
     }
-    return []
+
+    return {
+      carte: [],
+      extensions: undefined,
+      nbObtenues: 0,
+      percent: "0",
+    }
   }, [extension, user, id])
 
   const toggleLiked = () => {
@@ -64,6 +90,7 @@ function Extension({ name }) {
         <h1 className="text-3xl text-white">
           Extension {extension.length > 0 && extension.filter((ext) => ext._id === id)[0].nom}
         </h1>
+
         <div className="flex items-center gap-2">
           <RefreshCcw onClick={onReset} className="cursor-pointer select-none text-white" />
           <div
@@ -104,6 +131,15 @@ function Extension({ name }) {
             </div>
           )}
         </div>
+      </div>
+      <div className="flex w-[300px] items-center justify-between gap-[5px] px-1 text-white">
+        <div className="flex h-[12px] flex-1 items-center justify-start rounded border-2 border-white">
+          <div className={`h-[8px] bg-blue-600`} style={{ width: `${percent}%` }}></div>
+        </div>
+        <p className="pb-[3px]">{percent}%</p>
+        <p className="pb-[3px] text-white">
+          {nbObtenues}/{extensions && extensions.nbCarte}
+        </p>
       </div>
       {
         <div className="flex flex-wrap justify-center gap-[15px] px-[20px] py-[15px]">

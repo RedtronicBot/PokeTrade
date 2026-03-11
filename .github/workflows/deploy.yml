@@ -15,6 +15,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Prepare Repo Names in Lowercase
+        id: repo_names
+        run: |
+          echo "backend_tag=ghcr.io/${GITHUB_REPOSITORY,,}/backend:latest" >> $GITHUB_OUTPUT
+          echo "frontend_tag=ghcr.io/${GITHUB_REPOSITORY,,}/frontend:latest" >> $GITHUB_OUTPUT
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -25,16 +31,18 @@ jobs:
       - name: Build and Push Backend
         uses: docker/build-push-action@v5
         with:
-          context: ./backend # Chemin vers ton dossier backend
+          context: ./backend
           push: true
-          tags: ghcr.io/${{ github.repository }}/backend:latest
+          # On utilise le tag généré à l'étape précédente
+          tags: ${{ steps.repo_names.outputs.backend_tag }}
 
       - name: Build and Push Frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend # Chemin vers ton dossier frontend
+          context: ./frontend
           push: true
-          tags: ghcr.io/${{ github.repository }}/frontend:latest
+          # On utilise le tag généré à l'étape précédente
+          tags: ${{ steps.repo_names.outputs.frontend_tag }}
 
   deploy:
     runs-on: ubuntu-latest

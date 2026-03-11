@@ -1,25 +1,23 @@
 services:
   backend:
-    image: poketrade-backend
-    container_name: node-backend
-    build: ./backend
-    ports:
-      - "3001:3001"
-    env_file:
-      - ./backend/.env
-    restart: unless-stopped
-    volumes:
-      - ./data/raretes:/app/raretes
-      - ./data/cartes:/app/cartes
-      - ./data/extensions:/app/extensions
+    image: ghcr.io/redtronicbot/poketrade/backend:latest
+    networks:
+      - proxy
+    # Pas de ports ici, Traefik s'en occupe
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-redtro.rule=Host(`api.redtroverv.duckdns.org`)"
+      - "traefik.http.routers.api-redtro.tls.certresolver=le"
 
   frontend:
-    image: nginx:alpine
-    container_name: vite-frontend
-    ports:
-      - "8080:80"
-    volumes:
-      - ./frontend/dist:/usr/share/nginx/html:ro
-    depends_on:
-      - backend
-    restart: unless-stopped
+    image: ghcr.io/redtronicbot/poketrade/frontend:latest
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.front-redtro.rule=Host(`www.redtroverv.duckdns.org`)"
+      - "traefik.http.routers.front-redtro.tls.certresolver=le"
+
+networks:
+  proxy:
+    external: true

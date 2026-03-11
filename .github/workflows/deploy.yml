@@ -71,7 +71,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/apps/mon-projet
-            # On force le nom en minuscules pour Docker (à adapter si besoin)
-            sed -i 's|${GITHUB_REPOSITORY}|redtronicbot/poketrade|g' docker-compose.yml
+            # On demande à Docker de récupérer les nouvelles images
             docker compose pull
+            # On relance les conteneurs proprement
             docker compose up -d

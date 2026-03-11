@@ -1,6 +1,6 @@
 services:
   backend:
-    image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/backend:latest
+    image: ghcr.io/redtronicbot/poketrade/backend:latest
     networks:
       - proxy
     # Pas de ports ici, Traefik s'en occupe
@@ -10,7 +10,7 @@ services:
       - "traefik.http.routers.api-redtro.tls.certresolver=le"
 
   frontend:
-    image: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}/frontend:latest
+    image: ghcr.io/redtronicbot/poketrade/frontend:latest
     networks:
       - proxy
     labels:

@@ -6,7 +6,7 @@ services:
     # Pas de ports ici, Traefik s'en occupe
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api-redtro.rule=Host(`api.redtroverv.duckdns.org`)"
+      - "traefik.http.routers.api-redtro.rule=Host(`${API_URL}`)"
       - "traefik.http.routers.api-redtro.tls.certresolver=le"
 
   frontend:
@@ -15,7 +15,7 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.front-redtro.rule=Host(`www.redtroverv.duckdns.org`)"
+      - "traefik.http.routers.front-redtro.rule=Host(`${FRONT_URL}`)"
       - "traefik.http.routers.front-redtro.tls.certresolver=le"
 
 networks:
